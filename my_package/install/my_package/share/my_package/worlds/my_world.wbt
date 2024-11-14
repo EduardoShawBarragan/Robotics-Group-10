@@ -17,7 +17,9 @@ TexturedBackgroundLight {
 }
 CircleArena {
 }
+
 Robot {
+  translation -0.5 -0.5 0.0415 
   children [
     HingeJoint {
       jointParameters HingeJointParameters {
@@ -38,7 +40,7 @@ Robot {
               Shape {
                 appearance PBRAppearance {
                   baseColor 1 0 0
-                  roughness 1
+                  roughness 0
                   metalness 0
                 }
                 geometry Cylinder {
@@ -81,7 +83,7 @@ Robot {
       children [
         Shape {
           appearance PBRAppearance {
-            baseColor 0 0 1
+            baseColor 1 0 1
             roughness 1
             metalness 0
           }
@@ -148,4 +150,54 @@ Robot {
   }
   controller "<extern>"
   name "my_robot"
+}
+
+Robot {
+  name "stationaryRobot"
+  translation 0 0 1  # Position the robot at the origin
+  rotation 0 1 0 0   # Keep the robot rotation stationary
+  children [
+    RangeFinder {
+      name "lidar"
+      translation 0 0 0.1  # Position the rangefinder slightly forward
+      rotation 0 1 0 0     # Ensure it is facing forward
+      minRange 0.1
+      maxRange 5.0
+      resolution 0.01
+    }
+
+    Camera {
+      name "camera"
+      translation 0 0 0.1  # Position the camera slightly forward of the robot
+      rotation 0 1 0 0     # Ensure the camera is facing outward
+      width 640
+      height 480
+      near 0.1
+      far 10
+    }
+  ]
+  controller "stationary_scan_node" 
+}
+
+DEF BOX Solid {
+  translation 0.5 0.5 0.1   # Position in the world
+  rotation 0 1 0 0      # Rotation (0 = no rotation)
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 0 0    # Box color (Red)
+        }
+      }
+      geometry Box {
+        size 0.2 0.2 0.2       # Size of the box (x, y, z)
+      }
+    }
+  ]
+  boundingObject Box {
+    size 0.2 0.2 0.2           # Same size as geometry for collision
+  }
+  physics Physics {
+    mass 1.0                   # Mass of the box for physics simulation
+  }
 }

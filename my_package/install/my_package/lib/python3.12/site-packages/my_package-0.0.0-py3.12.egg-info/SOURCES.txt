@@ -13,6 +13,7 @@ launch/robot_launch.py
 my_package/__init__.py
 my_package/my_robot_driver.py
 my_package/spawn_red_cube.py
+my_package/stationary_scan_node.py
 my_package/supervisor.py
 resource/my_package
 resource/my_robot.urdf

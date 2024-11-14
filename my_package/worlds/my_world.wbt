@@ -17,7 +17,9 @@ TexturedBackgroundLight {
 }
 CircleArena {
 }
+
 Robot {
+  translation -0.5 -0.5 0.0415 
   children [
     HingeJoint {
       jointParameters HingeJointParameters {
@@ -150,8 +152,51 @@ Robot {
   name "my_robot"
 }
 
+Robot {
+  name "stationaryRobott"
+  translation 0 0 0  # Position the robot at the origin
+  rotation 0 1 0 0   # Keep the robot rotation stationary
+  children [
+    RangeFinder {
+      name "lidar"
+      translation 0 0 0.1  # Position the rangefinder slightly forward
+      rotation 0 1 0 0     # Ensure it is facing forward
+      minRange 0.1
+      maxRange 10.0
+      resolution 0.01
+    }
+
+    Camera {
+      name "camera"
+      translation 0 0 0.1  # Position the camera slightly forward of the robot
+      rotation 0 1 0 0     # Ensure the camera is facing outward
+      width 640
+      height 480
+      near 0.1
+      far 10
+    }
+
+    Solid {
+      translation 0 0 0.05  # Position the body of the robot slightly above the ground
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1  # Blue color for the body
+            }
+          }
+          geometry Cylinder {
+            height 0.2  # Height of the robot body
+            radius 0.1  # Radius of the robot body
+          }
+        }
+      ]
+    }
+  ]
+}
+
 DEF BOX Solid {
-  translation 0 0.1 0   # Position in the world
+  translation 0.5 0.5 0.1   # Position in the world
   rotation 0 1 0 0      # Rotation (0 = no rotation)
   children [
     Shape {
@@ -168,7 +213,10 @@ DEF BOX Solid {
   boundingObject Box {
     size 0.2 0.2 0.2           # Same size as geometry for collision
   }
-  physics Physics {
-    mass 1.0                   # Mass of the box for physics simulation
-  }
+}
+
+DirectionalLight {
+  direction 1 -1 -1  # Direction of the light (x, y, z)
+  intensity 1        # Brightness of the light
+  color 1 1 1        # White light (RGB values)
 }

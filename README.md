@@ -1,5 +1,9 @@
 # Robotics-Group-10
 
+# you will need to run:
+sudo apt install ros-jazzy-cv-bridge
+
+
 How to install webots:
 
 Linux:
@@ -24,4 +28,5 @@ ros2 topic pub /cmd_vel geometry_msgs/Twist  "linear: { x: 0.1 }"
 
 When you make changes to the code, you need to run this before running the code the same way as above:
 colcon build
+
 
